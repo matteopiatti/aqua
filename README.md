@@ -1,5 +1,7 @@
 # Aqua Browser
 
+[![npm](https://img.shields.io/npm/v/npm.svg)](https://github.com/matteo-piatti/aqua/blob/master/package.json)
+
 *A small, open-source "always on top" browser*
 
 ## Getting Started
