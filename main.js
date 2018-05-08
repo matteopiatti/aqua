@@ -15,6 +15,10 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
+  let onTopInterval = setInterval(function(){
+    mainWindow.setAlwaysOnTop(true);
+  }, 1);
+
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -30,6 +34,7 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    clearInterval(onTopInterval)
     mainWindow = null
   })
 }
