@@ -21,10 +21,6 @@ refresh.addEventListener('click', reloadView);
 back.addEventListener('click', backView);
 forward.addEventListener('click', forwardView);
 omni.addEventListener('keydown', updateURL);
-fave.addEventListener('click', addBookmark);
-list.addEventListener('click', openPopUp);
-popup.addEventListener('click', handleUrl);
-dev.addEventListener('click', handleDevtools);
 view.addEventListener('did-finish-load', updateNav);
 
 function reloadView () {
