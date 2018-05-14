@@ -23,6 +23,8 @@ forward.addEventListener('click', forwardView);
 omni.addEventListener('keydown', updateURL);
 view.addEventListener('did-finish-load', updateNav);
 
+console.log(window.navigator.plugins)
+
 function reloadView () {
   view.reload();
 }

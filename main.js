@@ -1,15 +1,16 @@
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-const { blockWindowAds } = require('electron-ad-blocker');
+const {app, BrowserWindow} = require('electron')
+const { blockWindowAds } = require('electron-ad-blocker')
 
 const path = require('path')
 const url = require('url')
 
+app.commandLine.appendSwitch('widevine-cdm-path', '/Users/MatteoPiatti/Projects/aqua/plugins/WidevineCdm/1.4.8.1030/_platform_specific/mac_x64/widevinecdmadapter.plugin')
+app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.1030')
+
 let mainWindow
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 800, height: 600, title: "Aqua", titleBarStyle: 'hiddenInset', show: false, fullscreenable: false})
+  mainWindow = new BrowserWindow({width: 800, height: 600, title: "Aqua", titleBarStyle: 'hiddenInset', show: false, fullscreenable: false, webPreferences: {plugins: true}})
   blockWindowAds(mainWindow)
 
   mainWindow.once('ready-to-show', () => {
