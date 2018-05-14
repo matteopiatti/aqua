@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Aqua</title>
     <link rel="stylesheet" href="css/css/font-awesome.css">
-    <link rel="stylesheet" href="css/css/main.css">
+    <link rel="stylesheet" href="css/main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <style>
       webview {
@@ -15,14 +15,21 @@
   </head>
   <body id="browser">
     <nav id="navigation">
+      <i class="fas fa-angle-left"></i>
       <div class="button-wrapper">
-        <input type="button" class="common-buttons" id="back" value="<-">
+        <button type="button" class="common-buttons" id="back">
+          <i class="fas fa-angle-left"></i>
+        </button>
       </div>
       <div class="button-wrapper">
-          <input type="button" class="common-buttons" id="forward" value="->">
+          <button type="button" class="common-buttons" id="forward">
+            <i class="fas fa-angle-right"></i>
+          </button>
       </div>
       <div class="button-wrapper">
-          <input type="button" class="common-buttons" id="refresh" value="Ø">
+          <button type="button" class="common-buttons" id="refresh">
+            <i class="fas fa-redo-alt"></i>
+          </button>
       </div>
       <div id="omnibox">
         <input type="text" id="url">

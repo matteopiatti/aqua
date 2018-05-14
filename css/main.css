@@ -1,0 +1,96 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: block;
+}
+
+.common-buttons {
+    float: left;
+    display: block;
+    width: 30px;
+    font-size: 12px;
+    color: #eee;
+    margin: 0 auto;
+    flex-shrink: 1;
+}
+
+.common-buttons {
+    cursor: pointer;
+}
+
+#navigation {
+    padding-left: 80px;
+    width: 100%;
+    height: 38px;
+    background: rgb(245,244,245);
+    background: -moz-linear-gradient(top, rgba(245,244,245,1) 0%, rgba(236,234,236,1) 10%, rgba(234,232,234,1) 20%, rgba(232,230,232,1) 30%, rgba(230,228,230,1) 40%, rgba(226,224,226,1) 50%, rgba(224,222,224,1) 60%, rgba(221,219,221,1) 70%, rgba(218,217,218,1) 80%, rgba(217,215,217,1) 90%, rgba(219,217,219,1) 100%);
+    background: -webkit-linear-gradient(top, rgba(245,244,245,1) 0%,rgba(236,234,236,1) 10%,rgba(234,232,234,1) 20%,rgba(232,230,232,1) 30%,rgba(230,228,230,1) 40%,rgba(226,224,226,1) 50%,rgba(224,222,224,1) 60%,rgba(221,219,221,1) 70%,rgba(218,217,218,1) 80%,rgba(217,215,217,1) 90%,rgba(219,217,219,1) 100%);
+    background: linear-gradient(to bottom, rgba(245,244,245,1) 0%,rgba(236,234,236,1) 10%,rgba(234,232,234,1) 20%,rgba(232,230,232,1) 30%,rgba(230,228,230,1) 40%,rgba(226,224,226,1) 50%,rgba(224,222,224,1) 60%,rgba(221,219,221,1) 70%,rgba(218,217,218,1) 80%,rgba(217,215,217,1) 90%,rgba(219,217,219,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f4f5', endColorstr='#dbd9db',GradientType=0 );
+    display: flex;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #a3a1a3;
+    box-sizing: border-box;
+}
+
+.button-wrapper, #omnibox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#omnibox {
+    width: 100%;
+}
+
+#url{
+    border: none;
+    height: 18px;
+    width: 80%;
+    border-radius: 5px;
+    padding-left: 1px;
+    color: #333;
+    margin: 0 auto;
+    display: block;
+    flex-shrink: 1;
+    /*background: url(images/reload.png) no-repeat scroll 7px 7px;
+    padding-left:30px;*/
+}
+
+#views {
+    position: relative;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100vh - 28px);
+}
+
+nav, #navigation {
+    -webkit-app-region: drag;
+}
+
+.common-buttons {
+    outline:none;
+    background-color: #f8f8f8;
+    border: 0.5px solid #d2d0d2;
+    border-radius: 5px;
+}
+
