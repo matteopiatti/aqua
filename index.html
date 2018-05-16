@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Aqua</title>
     <link rel="stylesheet" href="css/css/font-awesome.css">
+    <link rel="stylesheet" href="css/css/skeleton.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <style>
@@ -14,26 +15,23 @@
     </style>
   </head>
   <body id="browser">
-    <nav id="navigation">
-      <i class="fas fa-angle-left"></i>
-      <div class="button-wrapper">
-        <button type="button" class="common-buttons" id="back">
-          <i class="fas fa-angle-left"></i>
-        </button>
-      </div>
-      <div class="button-wrapper">
-          <button type="button" class="common-buttons" id="forward">
-            <i class="fas fa-angle-right"></i>
-          </button>
-      </div>
-      <div class="button-wrapper">
-          <button type="button" class="common-buttons" id="refresh">
-            <i class="fas fa-redo-alt"></i>
-          </button>
-      </div>
-      <div id="omnibox">
-        <input type="text" id="url">
-      </div>
+    <nav id="navigation Alignbr">
+	    <div class="Aligner-item Aligner-item--top">…</div>
+	    <div class="Aligner-item">
+		    <button type="button" class="common-buttons" id="back">
+			    <i class="fa fa-angle-left button-content"></i>
+		    </button>
+		    <button type="button" class="common-buttons" id="forward">
+			    <i class="fa fa-angle-right button-content"></i>
+		    </button>
+		    <button type="button" class="common-buttons" id="refresh">
+			    <i class="fa fa-repeat button-content"></i>
+		    </button>
+	        <div class="omnibox">
+	            <input type="text" id="url" class="button-content">
+	        </div>
+	    </div>
+	    <div class="Aligner-item Aligner-item--bottom">…</div>
     </nav>
     <div id="views">
         <webview id="view" class="page" src="http://www.duckduckgo.com/" autosize="on"></webview>

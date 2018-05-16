@@ -10,7 +10,7 @@ app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.1030')
 let mainWindow
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 800, height: 600, title: "Aqua", titleBarStyle: 'hiddenInset', show: false, fullscreenable: false, webPreferences: {plugins: true}})
+  mainWindow = new BrowserWindow({width: 800, height: 600, title: "Aqua", frame: false, titleBarStyle: 'hiddenInset', show: false, fullscreenable: false, webPreferences: {plugins: true}})
   blockWindowAds(mainWindow)
 
   mainWindow.once('ready-to-show', () => {
