@@ -1,16 +1,16 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
 const { blockWindowAds } = require('electron-ad-blocker')
 
 const path = require('path')
 const url = require('url')
 
-app.commandLine.appendSwitch('widevine-cdm-path', '/Users/MatteoPiatti/Projects/aqua/plugins/WidevineCdm/1.4.8.1030/_platform_specific/mac_x64/widevinecdmadapter.plugin')
-app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.1030')
+app.commandLine.appendSwitch('widevine-cdm-path', '/Users/MatteoPiatti/Projects/aqua/plugins/WidevineCdm/1.4.8.984/widevinecdmadapter.plugin')
+app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.984')
 
 let mainWindow
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 800, height: 600, title: "Aqua", frame: false, titleBarStyle: 'hiddenInset', show: false, fullscreenable: false, webPreferences: {plugins: true}})
+  mainWindow = new BrowserWindow({width: 800, hasShadow: false, height: 600, title: "Aqua", frame: false, transparent: true, show: false, fullscreenable: false, webPreferences: {plugins: true}})
   blockWindowAds(mainWindow)
 
   mainWindow.once('ready-to-show', () => {
@@ -26,6 +26,11 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
+
+  ipcMain.on('fullscreen-dimensions', (event, arg) => {
+    mainWindow.setAspectRatio(arg.width / (arg.height + 38))
+    event.sender.send('fullscreen-dimensions-reply', 'success')
+  })
 
   mainWindow.on('closed', function () {
     clearInterval(onTopInterval)

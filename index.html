@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aqua</title>
     <link rel="stylesheet" href="css/css/font-awesome.css">
-    <link rel="stylesheet" href="css/css/skeleton.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <style>
-      webview {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="scripts/index.js"></script>
+    <script>if (window.module) module = window.module;</script>
   </head>
   <body id="browser">
-    <nav id="navigation Alignbr">
-	    <div class="Aligner-item Aligner-item--top">…</div>
-	    <div class="Aligner-item">
-		    <button type="button" class="common-buttons" id="back">
-			    <i class="fa fa-angle-left button-content"></i>
-		    </button>
-		    <button type="button" class="common-buttons" id="forward">
-			    <i class="fa fa-angle-right button-content"></i>
-		    </button>
-		    <button type="button" class="common-buttons" id="refresh">
-			    <i class="fa fa-repeat button-content"></i>
-		    </button>
-	        <div class="omnibox">
-	            <input type="text" id="url" class="button-content">
-	        </div>
+    <nav id="navigation">
+	    <button type="button" class="common-buttons button is-dark is-outlined is-medium" id="back">
+		    <i class="fa fa-angle-left"></i>
+	    </button>
+	    <button type="button" class="common-buttons button is-dark is-outlined is-medium" id="forward">
+		    <i class="fa fa-angle-right"></i>
+	    </button>
+	    <button type="button" class="common-buttons button is-dark is-outlined" id="refresh">
+		    <i class="fa fa-repeat" id="refresh-icon"></i>
+	    </button>
+	    <div class="field">
+		    <div class="control has-icons-right" id="loading-icon">
+			    <input type="text" id="url" class="input is-small">
+		    </div>
 	    </div>
-	    <div class="Aligner-item Aligner-item--bottom">…</div>
     </nav>
     <div id="views">
-        <webview id="view" class="page" src="http://www.duckduckgo.com/" autosize="on"></webview>
+	    <webview id="view" class="page" src="http://www.duckduckgo.com/" autosize="on" plugins></webview>
     </div>
-  <script>
-    require('./renderer.js')
-  </script>
+  </body>
+    <script>
+      require('./renderer.js')
+    </script>
+</html>

@@ -6,51 +6,130 @@ let favicon = require('favicon-getter').default
 let path = require('path')
 let uuid = require('uuid')
 let bookmarks = path.join(__dirname, 'bookmarks.json')
+const {ipcRenderer} = require('electron')
 
 let back = ById('back'),
   forward = ById('forward'),
   refresh = ById('refresh'),
   omni = ById('url'),
-  dev = ById('console'),
-  fave = ById('fave'),
-  list = ById('list'),
-  popup = ById('fave-popup'),
-  view = ById('view')
+  view = ById('view'),
+  refreshIcon = ById('refresh-icon'),
+  loadingIcon = ById('loading-icon'),
+  videoWidth,
+  videoHeight,
+  proportions
+
 
 refresh.addEventListener('click', reloadView);
 back.addEventListener('click', backView);
 forward.addEventListener('click', forwardView);
-omni.addEventListener('keydown', updateURL);
-view.addEventListener('did-finish-load', updateNav);
+omni.addEventListener('keydown', omniSearch);
+view.addEventListener('did-start-loading', updateNavStart);
+view.addEventListener('did-finish-load', updateNavStop);
+view.addEventListener('did-fail-load', updateNavStop);
+view.addEventListener('did-stop-load', updateNavStop);
+view.addEventListener('enter-html-full-screen', getVideoDimensions);
 
 console.log(window.navigator.plugins)
+console.log(process.versions)
 
 function reloadView () {
-  view.reload();
+  if(refreshIcon.className.indexOf('fa-times') > -1) {
+    view.stop()
+  } else {
+    view.reload()
+  }
 }
 
 function backView () {
-  view.goBack();
+  view.goBack()
 }
 
 function forwardView () {
-  view.goForward();
+  view.goForward()
 }
 
-function updateURL (event) {
+function getVideoDimensions() {
+  view
+    .getWebContents()
+    .executeJavaScript('document.webkitFullscreenElement.offsetHeight', (result) => {return result})
+    .then(result => {
+      videoHeight = result;
+      view
+        .getWebContents()
+        .executeJavaScript('document.webkitFullscreenElement.offsetWidth', (result) => {return result})
+        .then(result => {
+          videoWidth = result;
+          proportionFactory(videoWidth, videoHeight)
+        })
+    })
+
+}
+
+const menu = new Menu()
+const menuItem = new MenuItem({
+  label: 'Inspect Element',
+  click: () => {
+    remote.getCurrentWindow().inspectElement(rightClickPosition.x, rightClickPosition.y)
+  }
+})
+menu.append(menuItem)
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault()
+  rightClickPosition = {x: e.x, y: e.y}
+  menu.popup(remote.getCurrentWindow())
+}, false)
+
+function proportionFactory(width, height) {
+  proportions = {"width":width, "height":height}
+  setWindowProportions(proportions)
+}
+
+function setWindowProportions(proportions) {
+  console.log(ipcRenderer.send('fullscreen-dimensions', proportions))
+}
+
+ipcRenderer.on('fullscreen-dimensions-reply', (event, arg) => {
+  console.log(arg)
+})
+
+function omniSearch (event) {
   if (event.keyCode === 13) {
-    omni.blur();
-    let val = omni.value;
-    let https = val.slice(0, 8).toLowerCase();
-    let http = val.slice(0, 7).toLowerCase();
-    if (https === 'https://') {
-      view.loadURL(val);
-    } else if (http === 'http://') {
-      view.loadURL(val);
+    console.log("lol")
+    omni.blur()
+    if (ValidURL(omni.value)) {
+      updateURL()
     } else {
-      view.loadURL('http://'+ val);
+      view.loadURL('https://duckduckgo.com/?q=' + omni.value + '&t=h_&ia=web')
     }
   }
+}
+
+function updateURL () {
+  let val = omni.value;
+  let https = val.slice(0, 8).toLowerCase();
+  let http = val.slice(0, 7).toLowerCase();
+  if (https === 'https://') {
+    view.loadURL(val);
+  } else if (http === 'http://') {
+    view.loadURL(val);
+  } else {
+    view.loadURL('http://'+ val);
+  }
+}
+
+/**
+ * @return {boolean}
+ */
+function ValidURL(str) {
+  let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name and extension
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?'+ // port
+    '(\\/[-a-z\\d%@_.~+&:]*)*'+ // path
+    '(\\?[;&a-z\\d%@_.,~+&:=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return pattern.test(str);
 }
 
 function addBookmark () {
@@ -109,8 +188,17 @@ function handleDevtools () {
   }
 }
 
-function updateNav (event) {
+function updateNavStop (event) {
+  refreshIcon.classList.add('fa-repeat');
+  refreshIcon.classList.remove('fa-times');
+  loadingIcon.classList.remove('is-loading');
   omni.value = view.src;
+}
+
+function updateNavStart (event) {
+  refreshIcon.classList.remove('fa-repeat');
+  refreshIcon.classList.add('fa-times');
+  loadingIcon.classList.add('is-loading');
 }
 
 let Bookmark = function (id, url, faviconUrl, title) {
