@@ -1,5 +1,5 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
-const { blockWindowAds } = require('electron-ad-blocker')
+//const { blockWindowAds } = require('electron-ad-blocker')
 
 const path = require('path')
 const url = require('url')
@@ -10,8 +10,8 @@ app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.984')
 let mainWindow
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 800, hasShadow: false, height: 600, title: "Aqua", frame: false, transparent: true, show: false, fullscreenable: false, webPreferences: {plugins: true}})
-  blockWindowAds(mainWindow)
+  mainWindow = new BrowserWindow({width: 1000, hasShadow: false, height: 600, transparent: true, title: "Aqua", frame: false, show: false, fullscreenable: false, webPreferences: {plugins: true}})
+  //blockWindowAds(mainWindow)
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
@@ -28,8 +28,14 @@ function createWindow () {
   }))
 
   ipcMain.on('fullscreen-dimensions', (event, arg) => {
-    mainWindow.setAspectRatio(arg.width / (arg.height + 38))
+    mainWindow.setAspectRatio(arg.width / arg.height, [0, 38])
     event.sender.send('fullscreen-dimensions-reply', 'success')
+  })
+
+  ipcMain.on('remove-aspect-ratio', (event, arg) => {
+    console.log("remove aspectratio")
+    mainWindow.setAspectRatio(0)
+    event.sender.send('remove-aspect-ratio-reply', 'success')
   })
 
   mainWindow.on('closed', function () {

@@ -118,3 +118,27 @@ body {
         width: auto;
     }
 }
+
+.test-button {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(18, 171, 43);
+    border-radius: 50%;
+    background-color: rgb(48, 203, 49);
+    width: 16px;
+    height: 16px;
+    z-index: 3;
+
+    outline: none;
+
+    margin-bottom: 0;
+    text-align:center;
+    vertical-align:middle;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
