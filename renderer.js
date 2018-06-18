@@ -29,6 +29,7 @@ view.addEventListener('did-finish-load', updateNavStop);
 view.addEventListener('did-fail-load', updateNavStop);
 view.addEventListener('did-stop-load', updateNavStop);
 view.addEventListener('enter-html-full-screen', getVideoDimensions);
+view.addEventListener('leave-html-full-screen', removeAspectRatio);
 
 console.log(window.navigator.plugins)
 console.log(process.versions)
@@ -49,6 +50,14 @@ function forwardView () {
   view.goForward()
 }
 
+function removeAspectRatio() {
+  sendMessage('remove-aspect-ratio')
+}
+
+function sendMessage (messageName, messageContent) {
+  console.log(ipcRenderer.send(messageName, messageContent))
+}
+
 function getVideoDimensions() {
   view
     .getWebContents()
@@ -66,19 +75,19 @@ function getVideoDimensions() {
 
 }
 
-const menu = new Menu()
-const menuItem = new MenuItem({
-  label: 'Inspect Element',
-  click: () => {
-    remote.getCurrentWindow().inspectElement(rightClickPosition.x, rightClickPosition.y)
-  }
-})
-menu.append(menuItem)
-window.addEventListener('contextmenu', (e) => {
-  e.preventDefault()
-  rightClickPosition = {x: e.x, y: e.y}
-  menu.popup(remote.getCurrentWindow())
-}, false)
+// const menu = new Menu()
+// const menuItem = new MenuItem({
+//   label: 'Inspect Element',
+//   click: () => {
+//     remote.getCurrentWindow().inspectElement(rightClickPosition.x, rightClickPosition.y)
+//   }
+// })
+// menu.append(menuItem)
+// window.addEventListener('contextmenu', (e) => {
+//   e.preventDefault()
+//   rightClickPosition = {x: e.x, y: e.y}
+//   menu.popup(remote.getCurrentWindow())
+// }, false)
 
 function proportionFactory(width, height) {
   proportions = {"width":width, "height":height}
@@ -88,10 +97,6 @@ function proportionFactory(width, height) {
 function setWindowProportions(proportions) {
   console.log(ipcRenderer.send('fullscreen-dimensions', proportions))
 }
-
-ipcRenderer.on('fullscreen-dimensions-reply', (event, arg) => {
-  console.log(arg)
-})
 
 function omniSearch (event) {
   if (event.keyCode === 13) {
@@ -219,3 +224,12 @@ Bookmark.prototype.ELEMENT = function () {
   a_tag.insertBefore(favimage, a_tag.childNodes[0]);
   return a_tag;
 }
+
+
+ipcRenderer.on('remove-aspect-ratio-reply', (event, arg) => {
+  console.log(arg)
+})
+
+ipcRenderer.on('fullscreen-dimensions-reply', (event, arg) => {
+  console.log(arg)
+})
